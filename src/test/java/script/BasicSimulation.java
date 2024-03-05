@@ -15,7 +15,7 @@ public class BasicSimulation extends Simulation {
 
     // 1.http configuration
     private HttpProtocolBuilder protocolBuilder = http
-            .baseUrl("http://ec2-3-98-121-220.ca-central-1.compute.amazonaws.com:8080/api")
+            .baseUrl("http://ec2-35-183-5-49.ca-central-1.compute.amazonaws.com:8080/api/v1")
             .acceptHeader("application/json")
             .contentTypeHeader("application/json");
 

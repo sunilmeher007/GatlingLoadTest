@@ -13,9 +13,12 @@ import static io.gatling.javaapi.http.HttpDsl.http;
 
 public class LoadSimulation extends Simulation {
 
+    private static final String AWS_HOST_NAME = System.getProperty("host",
+            "ec2-35-183-5-49.ca-central-1.compute.amazonaws.com");
+
     // 1.http configuration
     private HttpProtocolBuilder protocolBuilder = http
-            .baseUrl("http://ec2-3-98-121-220.ca-central-1.compute.amazonaws.com:8080/api")
+            .baseUrl("http://" + AWS_HOST_NAME + ":8080/api/v1")
             .acceptHeader("application/json")
             .contentTypeHeader("application/json");
 
@@ -42,18 +45,6 @@ public class LoadSimulation extends Simulation {
                             exec(removeAnItem()))
                     // .pause(Duration.ofMillis(100))
             );
-//            // .pause(2)
-//            .repeat(5000).on(
-//                    exec(http("Check for an item")
-//                            .get("/hasItem/#{randomInt()}")
-//                            .check(status().is(200)))
-//            )
-//            // .pause(2)
-//            .repeat(5000).on(
-//                    exec(http("Remove an item")
-//                            .post("/removeItem").body(StringBody("{\"key\" : #{randomInt()}}")))
-//            );
-            //.pause(Duration.ofMillis(500));
 
     // 3.load simulation
     {
@@ -64,7 +55,7 @@ public class LoadSimulation extends Simulation {
                         // rampUsers(10).during(5), // 3
                         constantUsersPerSec(20).during(30), // 4
 //                        constantUsersPerSec(20).during(15).randomized(), // 5
-//                        rampUsersPerSec(10).to(20).during(10), // 6
+                        rampUsersPerSec(10).to(20).during(10), // 6
 //                        rampUsersPerSec(10).to(20).during(10).randomized(), // 7
                         stressPeakUsers(1000).during(20)
                 )
